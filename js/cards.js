@@ -59,12 +59,10 @@ function getRecipeCardDOM(recipe) {
     return article;
 }
 
-async function displayData(data) {
+function displayRecipes(recipes) {
     const cardSection = document.querySelector(".card");
-    data.forEach((recipe) => {
+    recipes.forEach((recipe) => {
         const userCardDOM = getRecipeCardDOM(recipe);
         cardSection.appendChild(userCardDOM);
     });
 }
-
-displayData(recipes);
