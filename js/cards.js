@@ -58,11 +58,32 @@ function getRecipeCardDOM(recipe) {
     
     return article;
 }
+function filterRecipes() {
+    const searchInput = document.getElementById("searchInput");
+    const searchText = searchInput.value.toLowerCase();
+
+    const filteredRecipes = recipes.filter((recipe) => {
+        const recipeName = recipe.name.toLowerCase();
+        return recipeName.includes(searchText);
+    });
+
+    displayRecipes(filteredRecipes);
+}
 
 function displayRecipes(recipes) {
     const cardSection = document.querySelector(".card");
+    cardSection.innerHTML = ''
     recipes.forEach((recipe) => {
         const userCardDOM = getRecipeCardDOM(recipe);
         cardSection.appendChild(userCardDOM);
+    });
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.querySelector(".icon");
+
+    searchButton.addEventListener("click", filterRecipes);
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            filterRecipes();
+        }
     });
 }
