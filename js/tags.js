@@ -1,24 +1,6 @@
 function initTag(nameTag, listTags) {
   const tagParent = document.querySelector(".tag");
 
-  // const select = document.createElement("select");
-  // select.className =
-  //   "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
-  // select.id = nameTag;
-
-  // const titleOption = document.createElement("option");
-  // titleOption.value = "";
-  // titleOption.textContent = nameTag.charAt(0).toUpperCase() + nameTag.slice(1);
-  // titleOption.selected = true;
-  // titleOption.disabled = true;
-  // select.appendChild(titleOption);
-
-  // listTags.forEach((tag) => {
-  //   const option = document.createElement("option");
-  //   option.value = tag;
-  //   option.textContent = tag;
-  //   select.appendChild(option);
-  // });
   const filterTagDiv = document.createElement("div");
   filterTagDiv.className = "filterTag";
 
@@ -29,7 +11,7 @@ function initTag(nameTag, listTags) {
   titleH3.textContent = nameTag;
 
   const toggleButtonI = document.createElement("i");
-  toggleButtonI.textContent = "v";
+  toggleButtonI.className = "fa-solid fa-chevron-down";
 
   filterTagBtnDiv.appendChild(titleH3);
   filterTagBtnDiv.appendChild(toggleButtonI);
@@ -39,16 +21,34 @@ function initTag(nameTag, listTags) {
 
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
-  searchInput.setAttribute("placeholder", "Recherchez un tag");
+  searchInput.className = "tag-search";
 
   const ulListe = document.createElement("ul");
   ulListe.className = "liste";
+  const ulSelectedListe = document.createElement("div");
+  ulSelectedListe.className = "selected-list";
 
   listTags.forEach((tag) => {
     const liTag = document.createElement("li");
+    liTag.className = "tag-liste";
     liTag.textContent = tag;
     ulListe.appendChild(liTag);
+
+    addTag(liTag, tag);
   });
+  toggleButton(filterTagBtnDiv, contentTagDiv);
+  searchTag(searchInput, ulListe);
+
+  contentTagDiv.appendChild(searchInput);
+  contentTagDiv.appendChild(ulSelectedListe);
+  contentTagDiv.appendChild(ulListe);
+
+  filterTagDiv.appendChild(filterTagBtnDiv);
+  filterTagDiv.appendChild(contentTagDiv);
+  tagParent.appendChild(filterTagDiv);
+}
+
+function toggleButton(filterTagBtnDiv, contentTagDiv) {
   filterTagBtnDiv.addEventListener("click", () => {
     if (
       contentTagDiv.style.display === "none" ||
@@ -59,13 +59,61 @@ function initTag(nameTag, listTags) {
       contentTagDiv.style.display = "none";
     }
   });
+}
 
-  contentTagDiv.appendChild(searchInput);
-  contentTagDiv.appendChild(ulListe);
+function addTag(liTag, tag) {
+  const selected = document.querySelector(".tag-selected");
 
-  filterTagDiv.appendChild(filterTagBtnDiv);
-  filterTagDiv.appendChild(contentTagDiv);
-  tagParent.appendChild(filterTagDiv);
+  liTag.addEventListener("click", () => {
+    if (liTag.classList.contains("selectFilter")) {
+      liTag.classList.remove("selectFilter");
+      const divTag = selected.querySelector(`div[data-tag="${tag}"]`);
+      if (divTag) {
+        divTag.remove();
+      }
+      
+    } else {
+      const divTag = document.createElement("div");
+      divTag.className = "divTag";
+      divTag.setAttribute("data-tag", tag);
+
+      const newItem = document.createElement("span");
+      newItem.textContent = tag;
+      newItem.className = "p-2";
+
+      const closeItem = document.createElement("i");
+      closeItem.className = "fa-solid fa-xmark";
+
+      liTag.classList.add("selectFilter");
+
+      divTag.appendChild(newItem);
+      divTag.appendChild(closeItem);
+      selected.appendChild(divTag);
+
+      closeItem.addEventListener("click", () => {
+        divTag.remove();
+        liTag.classList.remove("selectFilter");
+      });
+
+    }
+  });
+}
+
+
+
+function searchTag(searchInput, ulListe) {
+  searchInput.addEventListener("input", () => {
+    const searchText = searchInput.value.toLowerCase();
+
+    ulListe.querySelectorAll("li").forEach((item) => {
+      const itemText = item.textContent.toLowerCase();
+      if (itemText.includes(searchText)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
 }
 
 function initListAppliances(recipe, uniqueAppliances) {
@@ -92,10 +140,23 @@ function initListTags(recipes) {
   const uniqueIngredients = new Set();
   const uniqueUstensils = new Set();
 
+  const toLowerCaseIfString = (str) =>
+    typeof str === "string" ? str.toLowerCase() : str;
+
   recipes.forEach((recipe) => {
-    initListAppliances(recipe, uniqueAppliances);
-    initListIngredients(recipe, uniqueIngredients);
-    initListUstensils(recipe, uniqueUstensils);
+    if (recipe.appliance)
+      uniqueAppliances.add(toLowerCaseIfString(recipe.appliance));
+    if (recipe.ingredients) {
+      recipe.ingredients.forEach((ingredient) => {
+        if (ingredient.ingredient)
+          uniqueIngredients.add(toLowerCaseIfString(ingredient.ingredient));
+      });
+    }
+    if (recipe.ustensils) {
+      recipe.ustensils.forEach((ustensil) => {
+        uniqueUstensils.add(toLowerCaseIfString(ustensil));
+      });
+    }
   });
 
   tabAppliances = [...uniqueAppliances];
