@@ -25,13 +25,14 @@ function initTag(nameTag, listTags) {
 
   const ulListe = document.createElement("ul");
   ulListe.className = "liste";
-  const ulSelectedListe = document.createElement("div");
+  const ulSelectedListe = document.createElement("ul");
   ulSelectedListe.className = "selected-list";
 
   listTags.forEach((tag) => {
     const liTag = document.createElement("li");
     liTag.className = "tag-liste";
     liTag.textContent = tag;
+    liTag.setAttribute("data-tag-name", nameTag);
     ulListe.appendChild(liTag);
 
     addTag(liTag, tag);
@@ -69,13 +70,14 @@ function addTag(liTag, tag) {
       liTag.classList.remove("selectFilter");
       const divTag = selected.querySelector(`div[data-tag="${tag}"]`);
       if (divTag) {
-        divTag.remove();
+        deleteTag(divTag, liTag);
       }
-      
     } else {
       const divTag = document.createElement("div");
       divTag.className = "divTag";
       divTag.setAttribute("data-tag", tag);
+      const getTagName = liTag.getAttribute("data-tag-name");
+      divTag.setAttribute("data-tag-name", getTagName)
 
       const newItem = document.createElement("span");
       newItem.textContent = tag;
@@ -85,21 +87,27 @@ function addTag(liTag, tag) {
       closeItem.className = "fa-solid fa-xmark";
 
       liTag.classList.add("selectFilter");
+      const selectedUl = liTag.closest("div").querySelector(".selected-list");
+      selectedUl.appendChild(liTag);
 
       divTag.appendChild(newItem);
       divTag.appendChild(closeItem);
       selected.appendChild(divTag);
+      filterRecipes();
 
       closeItem.addEventListener("click", () => {
-        divTag.remove();
-        liTag.classList.remove("selectFilter");
+        deleteTag(divTag, liTag);
       });
-
     }
   });
 }
 
-
+function deleteTag(divTag, liTag) {
+  divTag.remove();
+  liTag.classList.remove("selectFilter");
+  const ulListe = liTag.closest("div").querySelector(".liste");
+  ulListe.appendChild(liTag);
+}
 
 function searchTag(searchInput, ulListe) {
   searchInput.addEventListener("input", () => {
