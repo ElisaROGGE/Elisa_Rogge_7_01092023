@@ -21,14 +21,20 @@ function filterRecipes() {
   //Filter avec les tags
   filteredRecipes = filterTags(filteredRecipes);
 
-  console.log(filteredRecipes);
+  initListTags(filteredRecipes);
+  updateTag("ingredients", tabIngredients);
+  updateTag("appliances", tabAppliances);
+  updateTag("ustensils", tabUstensils);
+
+  console.log("filteredRecipes", filteredRecipes);
 
   displayRecipes(filteredRecipes);
 }
 
 function filterTags(filteredRecipes) {
-  const selectedTags = Array.from(document.querySelectorAll(".divTag div[data-tag]"));
-  console.log(selectedTags)
+  const selectedTags = Array.from(
+    document.querySelectorAll("[data-tag-name][data-tag]")
+  );
   if (selectedTags.length === 0) {
     return filteredRecipes;
   }
@@ -42,6 +48,7 @@ function filterTags(filteredRecipes) {
           return recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.toLowerCase().includes(selectedTag)
           );
+        // return filterRecipesByIngredient(recipe.ingredients, selectedTag)
         case "appliances":
           return recipe.appliance.toLowerCase().includes(selectedTag);
         case "ustensils":
@@ -55,15 +62,13 @@ function filterTags(filteredRecipes) {
   });
 }
 
-
-
-// function filterRecipesByIngredient(filteredRecipes, selectedIngredient) {
-//   return filteredRecipes.filter((recipe) =>
-//     recipe.ingredients.some((ingredient) =>
-//       ingredient.ingredient.toLowerCase().includes(selectedIngredient.toLowerCase())
-//     )
-//   );
-// }
+function filterRecipesByIngredient(filteredRecipes, selectedIngredient) {
+  filteredRecipes.some((ingredient) =>
+    ingredient.ingredient
+      .toLowerCase()
+      .includes(selectedIngredient.toLowerCase())
+  );
+}
 
 // function filterRecipesByAppliance(filteredRecipes, selectedAppliance) {
 //   return filteredRecipes.filter((recipe) =>
@@ -72,10 +77,7 @@ function filterTags(filteredRecipes) {
 // }
 
 // function filterRecipesByUstensil(filteredRecipes, selectedUstensil) {
-//   return filteredRecipes.filter((recipe) =>
 //     recipe.ustensils.some((ustensil) =>
 //       ustensil.toLowerCase().includes(selectedUstensil.toLowerCase())
 //     )
-//   );
 // }
-

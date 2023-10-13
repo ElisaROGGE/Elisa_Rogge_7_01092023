@@ -3,6 +3,7 @@ function initTag(nameTag, listTags) {
 
   const filterTagDiv = document.createElement("div");
   filterTagDiv.className = "filterTag";
+  filterTagDiv.id = nameTag;
 
   const filterTagBtnDiv = document.createElement("div");
   filterTagBtnDiv.className = "filterTagBtn";
@@ -28,15 +29,7 @@ function initTag(nameTag, listTags) {
   const ulSelectedListe = document.createElement("ul");
   ulSelectedListe.className = "selected-list";
 
-  listTags.forEach((tag) => {
-    const liTag = document.createElement("li");
-    liTag.className = "tag-liste";
-    liTag.textContent = tag;
-    liTag.setAttribute("data-tag-name", nameTag);
-    ulListe.appendChild(liTag);
-
-    addTag(liTag, tag);
-  });
+  createTag(listTags, ulListe, nameTag);
   toggleButton(filterTagBtnDiv, contentTagDiv);
   searchTag(searchInput, ulListe);
 
@@ -77,7 +70,7 @@ function addTag(liTag, tag) {
       divTag.className = "divTag";
       divTag.setAttribute("data-tag", tag);
       const getTagName = liTag.getAttribute("data-tag-name");
-      divTag.setAttribute("data-tag-name", getTagName)
+      divTag.setAttribute("data-tag-name", getTagName);
 
       const newItem = document.createElement("span");
       newItem.textContent = tag;
@@ -107,6 +100,7 @@ function deleteTag(divTag, liTag) {
   liTag.classList.remove("selectFilter");
   const ulListe = liTag.closest("div").querySelector(".liste");
   ulListe.appendChild(liTag);
+  filterRecipes();
 }
 
 function searchTag(searchInput, ulListe) {
@@ -166,6 +160,9 @@ function initListTags(recipes) {
       });
     }
   });
+  tabAppliances = [];
+  tabIngredients = [];
+  tabUstensils = [];
 
   tabAppliances = [...uniqueAppliances];
   tabIngredients = [...uniqueIngredients];
@@ -174,4 +171,34 @@ function initListTags(recipes) {
   tabAppliances.sort();
   tabIngredients.sort();
   tabUstensils.sort();
+}
+
+function updateTag(nameTag, listTags) {
+  const ulListe = document.querySelector("#" + nameTag + " ul.liste");
+  ulListe.innerHTML = "";
+  
+  createTag(listTags, ulListe, nameTag);
+}
+
+function createTag(listTags, ulListe, nameTag) {
+  listTags.forEach((tag) => {
+    const liTag = document.createElement("li");
+    liTag.className = "tag-liste";
+    liTag.textContent = tag;
+    liTag.setAttribute("data-tag-name", nameTag);
+    ulListe.appendChild(liTag);
+    const selected = document.querySelector(".selectedFilter");
+    console.log(selected)
+    // const selectedDivTags = selected.querySelectorAll("div.divTag");
+    // for (const divTag of selectedDivTags) {
+    //   if (divTag.getAttribute("data-tag") === tag) {
+    //     const liTagToMoveBack = divTag.closest(".selected-list").querySelector(`li[data-tag-name="${nameTag}"][data-tag="${tag}"]`);
+    //     if (liTagToMoveBack) {
+    //       deleteTag(divTag, liTagToMoveBack);
+    //     }
+    //   }
+    // }
+
+    addTag(liTag, tag);
+  });
 }
