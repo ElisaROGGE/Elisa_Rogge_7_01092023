@@ -75,6 +75,7 @@ h1{
 }
 .contentTag{
     display: none;
+    width: 100%;
 }
 .tag-liste{
     text-transform: capitalize;
@@ -85,7 +86,10 @@ h1{
     background-color: #FFD15B;
 }
 .tag-search{
-    border: 1px solid grey;
+    border: 1px solid rgb(178, 178, 178);
+    width: 92%;
+    height: 30px;
+    margin: 0 10px;
 }
 .tag-selected{
     display: flex;

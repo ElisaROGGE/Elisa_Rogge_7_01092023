@@ -87,9 +87,21 @@ function addTag(liTag, tag) {
       divTag.appendChild(closeItem);
       selected.appendChild(divTag);
       filterRecipes();
-
+      
       closeItem.addEventListener("click", () => {
         deleteTag(divTag, liTag);
+      });
+      const ulElement = document.querySelector(".liste");
+      const liElements = ulElement.querySelectorAll(".tag-liste");
+
+      liElements.forEach((liElement) => {
+        const dataTagValue = divTag.getAttribute("data-tag");
+        console.log("dataTag", dataTagValue)
+        const liText = liElement.textContent;
+
+        if (dataTagValue === liText) {
+          liElement.remove();
+        }
       });
     }
   });
@@ -176,7 +188,7 @@ function initListTags(recipes) {
 function updateTag(nameTag, listTags) {
   const ulListe = document.querySelector("#" + nameTag + " ul.liste");
   ulListe.innerHTML = "";
-  
+
   createTag(listTags, ulListe, nameTag);
 }
 
@@ -187,17 +199,6 @@ function createTag(listTags, ulListe, nameTag) {
     liTag.textContent = tag;
     liTag.setAttribute("data-tag-name", nameTag);
     ulListe.appendChild(liTag);
-    const selected = document.querySelector(".selectedFilter");
-    console.log(selected)
-    // const selectedDivTags = selected.querySelectorAll("div.divTag");
-    // for (const divTag of selectedDivTags) {
-    //   if (divTag.getAttribute("data-tag") === tag) {
-    //     const liTagToMoveBack = divTag.closest(".selected-list").querySelector(`li[data-tag-name="${nameTag}"][data-tag="${tag}"]`);
-    //     if (liTagToMoveBack) {
-    //       deleteTag(divTag, liTagToMoveBack);
-    //     }
-    //   }
-    // }
 
     addTag(liTag, tag);
   });

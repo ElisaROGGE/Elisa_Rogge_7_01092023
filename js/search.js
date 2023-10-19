@@ -48,7 +48,6 @@ function filterTags(filteredRecipes) {
           return recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.toLowerCase().includes(selectedTag)
           );
-        // return filterRecipesByIngredient(recipe.ingredients, selectedTag)
         case "appliances":
           return recipe.appliance.toLowerCase().includes(selectedTag);
         case "ustensils":
@@ -61,23 +60,3 @@ function filterTags(filteredRecipes) {
     });
   });
 }
-
-function filterRecipesByIngredient(filteredRecipes, selectedIngredient) {
-  filteredRecipes.some((ingredient) =>
-    ingredient.ingredient
-      .toLowerCase()
-      .includes(selectedIngredient.toLowerCase())
-  );
-}
-
-// function filterRecipesByAppliance(filteredRecipes, selectedAppliance) {
-//   return filteredRecipes.filter((recipe) =>
-//     recipe.appliance.toLowerCase().includes(selectedAppliance.toLowerCase())
-//   );
-// }
-
-// function filterRecipesByUstensil(filteredRecipes, selectedUstensil) {
-//     recipe.ustensils.some((ustensil) =>
-//       ustensil.toLowerCase().includes(selectedUstensil.toLowerCase())
-//     )
-// }
