@@ -2,21 +2,27 @@ function filterRecipes() {
   const searchInput = document.getElementById("searchInput");
   const searchText = searchInput.value.trim().toLowerCase();
 
-  let filteredRecipes = recipes.filter((recipe) => {
+  let filteredRecipes = [];
+  for (const recipe of recipes) {
     const recipeName = recipe.name.toLowerCase();
-    if (searchText !== "" || searchText.length >= 3) {
-      return (
+    const hasSearchText = searchText !== "" || searchText.length >= 3;
+
+    if (hasSearchText) {
+      if (
         searchText === "" ||
         recipeName.includes(searchText) ||
         recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(searchText)
         ) ||
         recipe.description.toLowerCase().includes(searchText)
-      );
+      ) {
+        filteredRecipes.push(recipe);
+      }
+    } else {
+      filteredRecipes.push(recipe);
     }
+  }
 
-    return true;
-  });
 
   //Filter avec les tags
   filteredRecipes = filterTags(filteredRecipes);
