@@ -87,32 +87,60 @@ function addTag(liTag, tag) {
       divTag.appendChild(closeItem);
       selected.appendChild(divTag);
       filterRecipes();
-      
+
       closeItem.addEventListener("click", () => {
         deleteTag(divTag, liTag);
       });
-      const ulElement = document.querySelector(".liste");
-      const liElements = ulElement.querySelectorAll(".tag-liste");
 
-      liElements.forEach((liElement) => {
-        const dataTagValue = divTag.getAttribute("data-tag");
-        console.log("dataTag", dataTagValue)
-        const liText = liElement.textContent;
+      updateDeleteTagInList();
+      // const ulElement = document.querySelector(".liste");
+      // const liElements = ulElement.querySelectorAll(".tag-liste");
 
-        if (dataTagValue === liText) {
-          liElement.remove();
-        }
-      });
+      // liElements.forEach((liElement) => {
+      //   const dataTagValue = divTag.getAttribute("data-tag");
+      //   const liText = liElement.textContent;
+
+      //   if (dataTagValue === liText) {
+      //     liElement.remove();
+      //   }
+      // });
     }
   });
 }
 
+function updateDeleteTagInList() {
+  const listesTags = document.querySelectorAll(".filterTag");
+  for (const listeTags of listesTags) {
+    deleteTagInList(listeTags.id);
+  }
+}
+
+function deleteTagInList(tagName) {
+  const selectedListes = document.querySelectorAll(
+    "#" + tagName + " .selected-list li"
+  );
+  const liste = document.querySelectorAll("#" + tagName + " .liste  li");
+
+  console.log(selectedListes, liste);
+
+  for (const selectedListe of selectedListes) {
+    for (const item of liste) {
+      if (item.textContent === selectedListe.textContent) {
+        item.remove();
+      }
+    }
+  }
+}
+
 function deleteTag(divTag, liTag) {
   divTag.remove();
+  const getTagName = liTag.getAttribute("data-tag-name");
   liTag.classList.remove("selectFilter");
+  console.log(liTag.closest("div"));
   const ulListe = liTag.closest("div").querySelector(".liste");
   ulListe.appendChild(liTag);
   filterRecipes();
+  updateDeleteTagInList();
 }
 
 function searchTag(searchInput, ulListe) {
