@@ -20,6 +20,11 @@ function initTag(nameTag, listTags) {
   const contentTagDiv = document.createElement("div");
   contentTagDiv.className = "contentTag";
 
+  const divSearch = document.createElement("div");
+  divSearch.className = "search-tag-parent";
+  const iconSearch = document.createElement("i");
+  iconSearch.className = "fa-solid fa-magnifying-glass";
+
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
   searchInput.className = "tag-search";
@@ -33,7 +38,9 @@ function initTag(nameTag, listTags) {
   toggleButton(filterTagBtnDiv, contentTagDiv);
   searchTag(searchInput, ulListe);
 
-  contentTagDiv.appendChild(searchInput);
+  divSearch.appendChild(searchInput);
+  divSearch.appendChild(iconSearch);
+  contentTagDiv.appendChild(divSearch);
   contentTagDiv.appendChild(ulSelectedListe);
   contentTagDiv.appendChild(ulListe);
 
@@ -49,8 +56,14 @@ function toggleButton(filterTagBtnDiv, contentTagDiv) {
       contentTagDiv.style.display === ""
     ) {
       contentTagDiv.style.display = "block";
+      const icon = document.querySelector(".fa-chevron-down")
+      icon.classList.remove("fa-chevron-down")
+      icon.className = "fa-solid fa-chevron-up"
     } else {
       contentTagDiv.style.display = "none";
+      const icon = document.querySelector(".fa-chevron-up")
+      icon.classList.remove("fa-chevron-up")
+      icon.className = "fa-solid fa-chevron-down"
     }
   });
 }
