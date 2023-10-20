@@ -5,21 +5,31 @@ function filterRecipes() {
   let filteredRecipes = [];
   for (const recipe of recipes) {
     const recipeName = recipe.name.toLowerCase();
+    const searchTextLower = searchText.toLowerCase();
     const hasSearchText = searchText !== "" || searchText.length >= 3;
-
-    if (hasSearchText) {
+    let matchFound = false;
+  
+    if (!hasSearchText) {
+      filteredRecipes.push(recipe);
+    } else {
       if (
         searchText === "" ||
-        recipeName.includes(searchText) ||
-        recipe.ingredients.some((ingredient) =>
-          ingredient.ingredient.toLowerCase().includes(searchText)
-        ) ||
-        recipe.description.toLowerCase().includes(searchText)
+        recipeName.includes(searchTextLower) ||
+        recipe.description.toLowerCase().includes(searchTextLower)
       ) {
+        matchFound = true;
+      } else {
+        for (const ingredient of recipe.ingredients) {
+          if (ingredient.ingredient.toLowerCase().includes(searchTextLower)) {
+            matchFound = true;
+            break;
+          }
+        }
+      }
+  
+      if (matchFound) {
         filteredRecipes.push(recipe);
       }
-    } else {
-      filteredRecipes.push(recipe);
     }
   }
 
