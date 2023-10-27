@@ -1,6 +1,8 @@
 function initTag(nameTag, listTags) {
   const tagParent = document.querySelector(".tag");
 
+  const tagDiv = document.createElement("div");
+
   const filterTagDiv = document.createElement("div");
   filterTagDiv.className = "filterTag";
   filterTagDiv.id = nameTag;
@@ -46,7 +48,8 @@ function initTag(nameTag, listTags) {
 
   filterTagDiv.appendChild(filterTagBtnDiv);
   filterTagDiv.appendChild(contentTagDiv);
-  tagParent.appendChild(filterTagDiv);
+  tagDiv.appendChild(filterTagDiv);
+  tagParent.appendChild(tagDiv);
 }
 
 function toggleButton(filterTagBtnDiv, contentTagDiv) {
@@ -56,14 +59,14 @@ function toggleButton(filterTagBtnDiv, contentTagDiv) {
       contentTagDiv.style.display === ""
     ) {
       contentTagDiv.style.display = "block";
-      const icon = document.querySelector(".fa-chevron-down")
-      icon.classList.remove("fa-chevron-down")
-      icon.className = "fa-solid fa-chevron-up"
+      const icon = document.querySelector(".fa-chevron-down");
+      icon.classList.remove("fa-chevron-down");
+      icon.className = "fa-solid fa-chevron-up";
     } else {
       contentTagDiv.style.display = "none";
-      const icon = document.querySelector(".fa-chevron-up")
-      icon.classList.remove("fa-chevron-up")
-      icon.className = "fa-solid fa-chevron-down"
+      const icon = document.querySelector(".fa-chevron-up");
+      icon.classList.remove("fa-chevron-up");
+      icon.className = "fa-solid fa-chevron-down";
     }
   });
 }
