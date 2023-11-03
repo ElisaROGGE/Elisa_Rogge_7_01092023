@@ -1,7 +1,7 @@
 function initTag(nameTag, listTags) {
   const tagParent = document.querySelector(".tag");
 
-  const tagDiv = document.createElement("div");
+  const tagDiv = document.querySelector(".filter-tag");
 
   const filterTagDiv = document.createElement("div");
   filterTagDiv.className = "filterTag";
