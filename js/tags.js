@@ -59,14 +59,18 @@ function toggleButton(filterTagBtnDiv, contentTagDiv) {
       contentTagDiv.style.display === ""
     ) {
       contentTagDiv.style.display = "block";
-      const icon = document.querySelector(".fa-chevron-down");
-      icon.classList.remove("fa-chevron-down");
-      icon.className = "fa-solid fa-chevron-up";
+      const icon = filterTagBtnDiv.querySelector(".fa-chevron-down");
+      if (icon) {
+        icon.classList.remove("fa-chevron-down");
+        icon.classList.add("fa-chevron-up");
+      }
     } else {
       contentTagDiv.style.display = "none";
-      const icon = document.querySelector(".fa-chevron-up");
-      icon.classList.remove("fa-chevron-up");
-      icon.className = "fa-solid fa-chevron-down";
+      const icon = filterTagBtnDiv.querySelector(".fa-chevron-up");
+      if (icon) {
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
+      }
     }
   });
 }
