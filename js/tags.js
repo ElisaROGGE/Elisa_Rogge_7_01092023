@@ -109,17 +109,6 @@ function addTag(liTag, tag) {
       });
 
       updateDeleteTagInList();
-      // const ulElement = document.querySelector(".liste");
-      // const liElements = ulElement.querySelectorAll(".tag-liste");
-
-      // liElements.forEach((liElement) => {
-      //   const dataTagValue = divTag.getAttribute("data-tag");
-      //   const liText = liElement.textContent;
-
-      //   if (dataTagValue === liText) {
-      //     liElement.remove();
-      //   }
-      // });
     }
   });
 }

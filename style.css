@@ -47,6 +47,17 @@ h1 {
   font-weight: 500;
   margin-bottom: 10px;
 }
+.timeWithImage{
+  position: relative;
+}
+.recipe-card .time{
+  right: 0;
+  position: absolute;
+  padding: 5px 15px;
+  margin: 25px 25px;
+  background-color: #FFD15B;
+  border-radius: 14px;
+}
 .recipe-card img {
   height: 300px;
   width: 100%;
@@ -105,6 +116,7 @@ h1 {
   background-color: white;
   margin-top: -15px;
   width: 100%;
+  z-index: 10;
 }
 .search-tag-parent {
   display: flex;

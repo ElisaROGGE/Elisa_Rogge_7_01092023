@@ -2,6 +2,11 @@ function getRecipeCardDOM(recipe) {
   const picture = `img/${recipe.image}`;
   const article = document.createElement("article");
   const cardInfo = document.createElement("div");
+  const timeWithImage = document.createElement("div")
+  timeWithImage.className = "timeWithImage"
+  const time = document.createElement("span")
+  time.className = "time"
+  time.textContent = recipe.time + "min"
   article.className = "recipe-card";
   cardInfo.className = "card-info";
   const img = document.createElement("img");
@@ -48,7 +53,9 @@ function getRecipeCardDOM(recipe) {
     ingredientItem.appendChild(ingredientQuantity);
   });
 
-  article.appendChild(img);
+  timeWithImage.appendChild(time)
+  timeWithImage.appendChild(img)
+  article.appendChild(timeWithImage);
   article.appendChild(cardInfo);
   cardInfo.appendChild(h2);
   cardInfo.appendChild(recette);

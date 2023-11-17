@@ -5,9 +5,9 @@ let tabUstensils = [];
 function init(recipes) {
   displayRecipes(recipes);
   initListTags(recipes);
-  initTag("ingredients", tabIngredients);
-  initTag("appliances", tabAppliances);
-  initTag("ustensils", tabUstensils);
+  initTag("Ingredients", tabIngredients);
+  initTag("Appareils", tabAppliances);
+  initTag("Ustensiles", tabUstensils);
   const totalRecipes = document.querySelector(".total");
   totalRecipes.textContent = recipes.length + " Recettes";
 }
