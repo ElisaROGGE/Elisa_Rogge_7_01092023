@@ -4,7 +4,7 @@ function filterRecipes() {
 
   let filteredRecipes = recipes.filter((recipe) => {
     const recipeName = recipe.name.toLowerCase();
-    if (searchText !== "" || searchText.length >= 3) {
+    if (searchText && searchText.length >= 3) {
       return (
         searchText === "" ||
         recipeName.includes(searchText) ||
@@ -21,12 +21,16 @@ function filterRecipes() {
   //Filter avec les tags
   filteredRecipes = filterTags(filteredRecipes);
 
+  const totalRecipes = document.querySelector(".total");
+
   initListTags(filteredRecipes);
   updateTag("ingredients", tabIngredients);
   updateTag("appliances", tabAppliances);
   updateTag("ustensils", tabUstensils);
 
   console.log("filteredRecipes", filteredRecipes);
+
+  totalRecipes.textContent = filteredRecipes.length + " Recettes";
 
   displayRecipes(filteredRecipes);
 }
