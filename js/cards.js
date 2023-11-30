@@ -66,6 +66,18 @@ function getRecipeCardDOM(recipe) {
   return article;
 }
 
+window.onload = function() {
+  const searchInput = document.getElementById("searchInput");
+  const searchButton = document.querySelector(".icon");
+
+  searchButton.addEventListener("click", filterRecipes);
+  searchInput.addEventListener("input", handleInput);
+
+  function handleInput(event) {
+    filterRecipes();
+  }
+};
+
 function displayRecipes(recipes) {
   const cardSection = document.querySelector(".card");
   cardSection.innerHTML = "";
@@ -73,11 +85,5 @@ function displayRecipes(recipes) {
     const userCardDOM = getRecipeCardDOM(recipe);
     cardSection.appendChild(userCardDOM);
   });
-  const searchInput = document.getElementById("searchInput");
-  const searchButton = document.querySelector(".icon");
-
-  searchButton.addEventListener("click", filterRecipes);
-  searchInput.addEventListener("input", function (event) {
-    filterRecipes();
-  });
 }
+

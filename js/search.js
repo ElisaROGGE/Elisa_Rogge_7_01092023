@@ -6,7 +6,6 @@ function filterRecipes() {
     const recipeName = recipe.name.toLowerCase();
     if (searchText && searchText.length >= 3) {
       return (
-        searchText === "" ||
         recipeName.includes(searchText) ||
         recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(searchText)
@@ -18,17 +17,14 @@ function filterRecipes() {
     return true;
   });
 
-  //Filter avec les tags
   filteredRecipes = filterTags(filteredRecipes);
 
   const totalRecipes = document.querySelector(".total");
 
   initListTags(filteredRecipes);
-  updateTag("ingredients", tabIngredients);
-  updateTag("appliances", tabAppliances);
-  updateTag("ustensils", tabUstensils);
-
-  console.log("filteredRecipes", filteredRecipes);
+  updateTag("Ingredients", tabIngredients);
+  updateTag("Appareils", tabAppliances);
+  updateTag("Ustensiles", tabUstensils);
 
   totalRecipes.textContent = filteredRecipes.length + " Recettes";
 
@@ -48,13 +44,13 @@ function filterTags(filteredRecipes) {
       const selectedTagName = tagDiv.getAttribute("data-tag-name");
       const selectedTag = tagDiv.getAttribute("data-tag").toLowerCase();
       switch (selectedTagName) {
-        case "ingredients":
+        case "Ingredients":
           return recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.toLowerCase().includes(selectedTag)
           );
-        case "appliances":
+        case "Appareils":
           return recipe.appliance.toLowerCase().includes(selectedTag);
-        case "ustensils":
+        case "Ustensiles":
           return recipe.ustensils.some((ustensil) =>
             ustensil.toLowerCase().includes(selectedTag)
           );
